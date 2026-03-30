@@ -1,0 +1,1507 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const lang = Astro.url.searchParams.get('lang') || 'en';
+
+const translations = {
+  en: {
+    nav: { about: 'About', services: 'Services', expertise: 'Expertise', contact: 'Contact', letsTalk: "Let's Talk" },
+    hero: { badge: 'Available for new projects', title1: 'Crafting', title2: 'Digital Excellence', title3: 'Through Code', subtitle: 'Full-stack developer specializing in enterprise Laravel applications, modern Astro sites, and AI-powered automation solutions.', btnProject: 'Start a Project', btnPricing: 'View Pricing', years: 'Years', projects: 'Projects', clients: 'Clients' },
+    about: { badge: 'About Me', title: 'Building', titleHighlight: 'Digital Solutions', titleEnd: 'That Drive Results', p1: "I'm a full-stack developer based in Bangladesh with a passion for building enterprise-grade web applications. My expertise lies in Laravel, Astro, and modern frontend technologies.", skills: { problem: { title: 'Problem Solver', desc: 'Turning complex challenges into elegant solutions' }, perf: { title: 'Performance Focused', desc: 'Sub-second load times optimized' }, ai: { title: 'AI-Powered', desc: 'Intelligent automation integration' } } },
+    services: { badge: 'Services', title: 'Transparent', titleHighlight: 'Pricing', subtitle: 'Value-driven packages designed to accelerate your digital presence.', enterprise: { tier: 'Enterprise', title: 'Laravel E-commerce', desc: 'Full-scale custom solution with inventory, multi-role management, analytics, and payment integration.', features: ['Custom Inventory System', 'Multi-role Staff Management', 'Filament v3 Dashboard', 'SSLCommerz/BKash Integration'], price: '20,000', btn: 'Get Started' }, business: { tier: 'Business', title: 'WordPress E-commerce', desc: 'Professional WooCommerce setup with premium themes, mobile design, SEO optimization.', features: ['WooCommerce Setup', 'Premium Theme Included', 'Mobile-first Design', 'SEO Optimization'], price: '15,000', btn: 'Get Started' }, essential: { tier: 'Essential', title: 'Portfolio & Landing', desc: 'Lightweight Astro or WordPress for portfolios, landing pages, small business sites.', features: ['Astro/WordPress Build', 'Modern Minimalist UI', 'Contact + WhatsApp', 'Fast & SEO Ready'], price: '10,000', btn: 'Get Started' }, custom: { tier: 'Custom', title: 'Negotiable / Custom', desc: 'Have a unique project in mind? Let\'s discuss your specific requirements and find the perfect solution for your budget.', features: ['Tailored Solution', 'Flexible Timeline', 'Budget Negotiable', 'Direct Communication'], price: 'Let\'s Talk', btn: 'Get Quote' }, popular: 'Most Popular' },
+    expertise: { badge: 'Expertise', title: 'Technical', titleHighlight: 'Arsenal', items: { backend: { title: 'Backend', desc: 'Laravel 13, PHP 8.x, Livewire 4' }, frontend: { title: 'Frontend', desc: 'Astro 4, Next.js, Tailwind CSS' }, admin: { title: 'Admin UI', desc: 'Filament v3, Livewire' }, ai: { title: 'AI & Automation', desc: 'MCP Servers, Claude/Gemini' } } },
+    contact: { badge: 'Contact', title: "Let's Build", titleHighlight: 'Together', subtitle: 'Ready to transform your digital presence? Book a free 15-minute strategy call.', phone: { label: 'Phone / WhatsApp', value: '+880 1794 188 835' }, linkedin: { label: 'LinkedIn', value: 'linkedin.com/in/pranthodas' }, github: { label: 'GitHub', value: 'github.com/Prantho-das' }, card: { name: 'Prantho Das', role: 'Full Stack Developer', whatsapp: 'Chat on WhatsApp', free: '15 minutes free consultation' } },
+    footer: { brand: 'Prantho Das', tagline: 'Crafting digital experiences with passion and precision.', nav: 'Navigation', services: 'Services', connect: 'Connect', copyright: 'All rights reserved.' }
+  },
+  bn: {
+    nav: { about: 'সম্পর্কে', services: 'সেবাসমূহ', expertise: 'দক্ষতা', contact: 'যোগাযোগ', letsTalk: 'কথা বলুন' },
+    hero: { badge: 'নতুন প্রজেক্টের জন্য উপলব্ধ', title1: 'কোডের মাধ্যমে', title2: 'ডিজিটাল', title3: 'শ্রেষ্ঠত্ব', subtitle: 'এন্টারপ্রাইজ Laravel অ্যাপ্লিকেশন, আধুনিক Astro সাইট এবং AI-চালিত অটোমেশন সমাধানে বিশেষায়িত ফুল-স্ট্যাক ডেভেলপার।', btnProject: 'প্রজেক্ট শুরু করুন', btnPricing: 'মূল্য দেখুন', years: 'বছর', projects: 'প্রজেক্ট', clients: 'ক্লায়েন্ট' },
+    about: { badge: 'আমার সম্পর্কে', title: 'ফলাফল', titleHighlight: 'ডিজিটাল সমাধান', titleEnd: 'নির্মাণ করা হচ্ছে', p1: 'বাংলাদেশ ভিত্তিক একজন ফুল-স্ট্যাক ডেভেলপার হিসেবে এন্টারপ্রাইজ-গ্রেড ওয়েব অ্যাপ্লিকেশন তৈরিতে আমার আবেগ রয়েছে। Laravel, Astro এবং আধুনিক ফ্রন্টএন্ড প্রযুক্তিতে আমার দক্ষতা।', skills: { problem: { title: 'সমস্যা সমাধানকারী', desc: 'জটিল চ্যালেঞ্জগুলোকে সুন্দর সমাধানে রূপান্তরিত করা' }, perf: { title: 'পারফরম্যান্স সম্পন্ন', desc: 'সাব-সেকেন্ড লোড টাইম অপ্টিমাইজড' }, ai: { title: 'AI-চালিত', desc: 'বুদ্ধিমান অটোমেশন ইন্টিগ্রেশন' } } },
+    services: { badge: 'সেবাসমূহ', title: 'স্বচ্ছ', titleHighlight: 'মূল্য', subtitle: 'আপনার ডিজিটাল উপস্থিতি ত্বরান্বিত করতে ডিজাইন করা মূল্য-চালিত প্যাকেজ।', enterprise: { tier: 'এন্টারপ্রাইজ', title: 'Laravel ই-কমার্স', desc: 'ইনভেন্টরি, মাল্টি-রোল ম্যানেজমেন্ট, অ্যানালিটিক্স এবং পেমেন্ট ইন্টিগ্রেশন সহ সম্পূর্ণ কাস্টম সলিউশন।', features: ['কাস্টম ইনভেন্টরি সিস্টেম', 'মাল্টি-রোল স্টাফ ম্যানেজমেন্ট', 'Filament v3 ড্যাশবোর্ড', 'SSLCommerz/BKash ইন্টিগ্রেশন'], price: '২০,০০০', btn: 'শুরু করুন' }, business: { tier: 'ব্যবসা', title: 'WordPress ই-কমার্স', desc: 'প্রিমিয়াম থিম, মোবাইল ডিজাইন, SEO অপ্টিমাইজেশন সহ পেশাদার WooCommerce সেটআপ।', features: ['WooCommerce সেটআপ', 'প্রিমিয়াম থিম অন্তর্ভুক্ত', 'মোবাইল-ফার্স্ট ডিজাইন', 'SEO অপ্টিমাইজেশন'], price: '১৫,০০০', btn: 'শুরু করুন' }, essential: { tier: 'অত্যাবশ্যক', title: 'পোর্টফোলিও ও ল্যান্ডিং', desc: 'পোর্টফোলিও, ল্যান্ডিং পেজ, ছোট ব্যবসার জন্য হালকা Astro বা WordPress।', features: ['Astro/WordPress বিল্ড', 'আধুনিক মিনিমালিস্ট UI', 'যোগাযোগ + WhatsApp', 'দ্রুত ও SEO রেডি'], price: '১০,০০০', btn: 'শুরু করুন' }, custom: { tier: 'কাস্টম', title: 'আলোচনাসাপেক্ষে', desc: 'অনন্য প্রজেক্ট আছে? আপনার নির্দিষ্ট প্রয়োজনীয়তা নিয়ে আলোচনা করুন এবং আপনার বাজেটের জন্য সঠিক সমাধান খুঁজুন।', features: ['কাস্টম সমাধান', 'নমনীয় সময়সীমা', 'বাজেট আলোচনাসাপেক্ষে', 'সরাসরি যোগাযোগ'], price: 'আলোচনা করুন', btn: 'কোটা পান' }, popular: 'সবচেয়ে জনপ্রিয়' },
+    expertise: { badge: 'দক্ষতা', title: 'কারিগরি', titleHighlight: 'অস্ত্রাগার', items: { backend: { title: 'ব্যাকএন্ড', desc: 'Laravel 13, PHP 8.x, Livewire 4' }, frontend: { title: 'ফ্রন্টএন্ড', desc: 'Astro 4, Next.js, Tailwind CSS' }, admin: { title: 'অ্যাডমিন UI', desc: 'Filament v3, Livewire' }, ai: { title: 'AI ও অটোমেশন', desc: 'MCP সার্ভার, Claude/Gemini' } } },
+    contact: { badge: 'যোগাযোগ', title: 'একসাথে', titleHighlight: 'তৈরি করি', subtitle: 'আপনার ডিজিটাল উপস্থিতি রূপান্তরিত করতে প্রস্তুত? একটি বিনামূল্যে ১৫ মিনিটের কৌশল কল বুক করুন।', phone: { label: 'ফোন / WhatsApp', value: '+৮৮০ ১৭৯৪ ১৮৮ ৮৩৫' }, linkedin: { label: 'LinkedIn', value: 'linkedin.com/in/pranthodas' }, github: { label: 'GitHub', value: 'github.com/Prantho-das' }, card: { name: 'প্রন্থ দাস', role: 'ফুল স্ট্যাক ডেভেলপার', whatsapp: 'WhatsApp এ চ্যাট করুন', free: '১৫ মিনিট বিনামূল্যে পরামর্শ' } },
+    footer: { brand: 'প্রন্থ দাস', tagline: 'আবেগ ও দক্ষতার সাথে ডিজিটাল অভিজ্ঞতা তৈরি করা।', nav: 'নেভিগেশন', services: 'সেবাসমূহ', connect: 'সংযুক্ত হন', copyright: 'সর্বস্বত্ব সংরক্ষিত।' }
+  }
+};
+
+const t = translations[lang];
+---
+
+<Layout title="Prantho Das | Full Stack Developer & AI Expert">
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="logo">
+          <img src="/DSCF7857.JPG" alt="Prantho" class="logo-img" />
+          <span class="logo-text">Prantho Das</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="#about"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a>
+          <a href="#services"><span class="en-text">Services</span><span class="bn-text">সেবাসমূহ</span></a>
+          <a href="#expertise"><span class="en-text">Expertise</span><span class="bn-text">দক্ষতা</span></a>
+          <div class="nav-actions">
+            <div class="nav-lang">
+              <button class="lang-btn active" data-lang="en">EN</button>
+              <button class="lang-btn" data-lang="bn">বাং</button>
+            </div>
+            <a href="#contact" class="btn btn-nav btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span class="en-text">Let's Talk</span><span class="bn-text">কথা বলুন</span>
+            </a>
+          </div>
+        </div>
+        <button class="mobile-menu" aria-label="Menu" onclick="document.getElementById('navLinks').classList.toggle('active')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <script is:inline>
+    (function() {
+      const STORAGE_KEY = 'prantho_portfolio_lang';
+      const langBtns = document.querySelectorAll('.nav-lang .lang-btn');
+      
+      function setLanguage(lang) {
+        localStorage.setItem(STORAGE_KEY, lang);
+        document.documentElement.setAttribute('data-lang', lang);
+        langBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+      }
+      
+      langBtns.forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+      });
+      
+      const savedLang = localStorage.getItem(STORAGE_KEY) || 'en';
+      setLanguage(savedLang);
+    })();
+  </script>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-blob blob-1"></div>
+      <div class="hero-blob blob-2"></div>
+      <div class="hero-grid-lines"></div>
+    </div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span class="en-text">Available for new projects</span><span class="bn-text">নতুন প্রজেক্টের জন্য উপলব্ধ</span>
+          </div>
+          <h1 class="hero-title">
+            <span class="line en-text">Crafting</span><span class="line bn-text">কোডের মাধ্যমে</span>
+            <span class="gradient-text en-text">Digital Excellence</span><span class="gradient-text bn-text">ডিজিটাল</span>
+            <span class="line en-text">Through Code</span><span class="line bn-text">শ্রেষ্ঠত্ব</span>
+          </h1>
+          <p class="hero-subtitle en-text">Full-stack developer specializing in enterprise Laravel applications, modern Astro sites, and AI-powered automation solutions.</p>
+          <p class="hero-subtitle bn-text">এন্টারপ্রাইজ Laravel অ্যাপ্লিকেশন, আধুনিক Astro সাইট এবং AI-চালিত অটোমেশন সমাধানে বিশেষায়িত ফুল-স্ট্যাক ডেভেলপার।</p>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn btn-primary btn-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span class="en-text">Start a Project</span><span class="bn-text">প্রজেক্ট শুরু করুন</span>
+            </a>
+            <a href="#services" class="btn btn-outline btn-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span class="en-text">View Pricing</span><span class="bn-text">মূল্য দেখুন</span>
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <span class="stat-number">5+</span>
+              <span class="stat-label en-text">Years</span><span class="stat-label bn-text">বছর</span>
+            </div>
+            <div class="stat">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <span class="stat-number">50+</span>
+              <span class="stat-label en-text">Projects</span><span class="stat-label bn-text">প্রজেক্ট</span>
+            </div>
+            <div class="stat">
+              <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <span class="stat-number">30+</span>
+              <span class="stat-label en-text">Clients</span><span class="stat-label bn-text">ক্লায়েন্ট</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="image-container">
+            <img src="/DSCF7857.JPG" alt="Prantho Das" />
+            <div class="image-ring"></div>
+            <div class="floating-badge badge-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+              Laravel Expert
+            </div>
+            <div class="floating-badge badge-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5-2"/><path d="M6.8 9 3.3 7"/><path d="m20.7 7-3.5 2"/><path d="m9 22 3-8 3 8"/><path d="M8 22h8"/><path d="M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.4"/></svg>
+              AI Automation
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image">
+          <img src="/DSCF7856.JPG" alt="Working" />
+          <div class="about-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5-2"/><path d="M6.8 9 3.3 7"/><path d="m20.7 7-3.5 2"/><path d="m9 22 3-8 3 8"/><path d="M8 22h8"/><path d="M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.4"/></svg>
+            AI Powered
+          </div>
+        </div>
+        <div class="about-content">
+          <span class="badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="en-text">About Me</span><span class="bn-text">আমার সম্পর্কে</span>
+          </span>
+          <h2>
+            <span class="en-text">Building </span><span class="bn-text">ফলাফল </span>
+            <span class="gradient-text en-text">Digital Solutions</span><span class="gradient-text bn-text">ডিজিটাল সমাধান</span><br/>
+            <span class="en-text">That Drive Results</span><span class="bn-text">নির্মাণ করা হচ্ছে</span>
+          </h2>
+          <p class="en-text">I'm a full-stack developer based in Bangladesh with a passion for building enterprise-grade web applications. My expertise lies in Laravel, Astro, and modern frontend technologies.</p>
+          <p class="bn-text">বাংলাদেশ ভিত্তিক একজন ফুল-স্ট্যাক ডেভেলপার হিসেবে এন্টারপ্রাইজ-গ্রেড ওয়েব অ্যাপ্লিকেশন তৈরিতে আমার আবেগ রয়েছে। Laravel, Astro এবং আধুনিক ফ্রন্টএন্ড প্রযুক্তিতে আমার দক্ষতা।</p>
+          <div class="skills-list">
+            <div class="skill">
+              <div class="skill-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              </div>
+              <div>
+                <h4 class="en-text">Problem Solver</h4><h4 class="bn-text">সমস্যা সমাধানকারী</h4>
+                <p class="en-text">Turning complex challenges into elegant solutions</p>
+                <p class="bn-text">জটিল চ্যালেঞ্জগুলোকে সুন্দর সমাধানে রূপান্তরিত করা</p>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="skill-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div>
+                <h4 class="en-text">Performance Focused</h4><h4 class="bn-text">পারফরম্যান্স সম্পন্ন</h4>
+                <p class="en-text">Sub-second load times optimized</p>
+                <p class="bn-text">সাব-সেকেন্ড লোড টাইম অপ্টিমাইজড</p>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="skill-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5-2"/><path d="M6.8 9 3.3 7"/><path d="m20.7 7-3.5 2"/><path d="m9 22 3-8 3 8"/><path d="M8 22h8"/><path d="M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.4"/></svg>
+              </div>
+              <div>
+                <h4 class="en-text">AI-Powered</h4><h4 class="bn-text">AI-চালিত</h4>
+                <p class="en-text">Intelligent automation integration</p>
+                <p class="bn-text">বুদ্ধিমান অটোমেশন ইন্টিগ্রেশন</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span class="en-text">Services</span><span class="bn-text">সেবাসমূহ</span>
+        </span>
+        <h2><span class="en-text">Transparent </span><span class="bn-text">স্বচ্ছ </span><span class="gradient-text en-text">Pricing</span><span class="gradient-text bn-text">মূল্য</span></h2>
+        <p class="en-text">Value-driven packages designed to accelerate your digital presence.</p>
+        <p class="bn-text">আপনার ডিজিটাল উপস্থিতি ত্বরান্বিত করতে ডিজাইন করা মূল্য-চালিত প্যাকেজ।</p>
+      </div>
+      <div class="services-grid">
+        <div class="card service-card enterprise">
+          <div class="card-glow"></div>
+          <div class="service-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+          </div>
+          <div class="tier-badge enterprise en-text">Enterprise</div>
+          <div class="tier-badge enterprise bn-text">এন্টারপ্রাইজ</div>
+          <h3 class="en-text">Laravel E-commerce</h3><h3 class="bn-text">Laravel ই-কমার্স</h3>
+          <p class="en-text">Full-scale custom solution with inventory, multi-role management, analytics, and payment integration.</p>
+          <p class="bn-text">ইনভেন্টরি, মাল্টি-রোল ম্যানেজমেন্ট, অ্যানালিটিক্স এবং পেমেন্ট ইন্টিগ্রেশন সহ সম্পূর্ণ কাস্টম সলিউশন।</p>
+          <ul class="feature-list en-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Custom Inventory System</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Multi-role Staff Management</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Filament v3 Dashboard</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SSLCommerz/BKash Integration</li>
+          </ul>
+          <ul class="feature-list bn-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>কাস্টম ইনভেন্টরি সিস্টেম</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>মাল্টি-রোল স্টাফ ম্যানেজমেন্ট</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Filament v3 ড্যাশবোর্ড</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SSLCommerz/BKash ইন্টিগ্রেশন</li>
+          </ul>
+          <div class="price-container">
+            <span class="price en-text">20,000</span><span class="price bn-text">২০,০০০</span>
+            <span class="currency">BDT</span>
+          </div>
+          <a href="#contact" class="btn btn-primary btn-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="en-text">Get Started</span><span class="bn-text">শুরু করুন</span>
+          </a>
+        </div>
+
+        <div class="card service-card popular">
+          <span class="popular-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span class="en-text">Most Popular</span><span class="bn-text">সবচেয়ে জনপ্রিয়</span>
+          </span>
+          <div class="card-glow"></div>
+          <div class="service-icon light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+          </div>
+          <div class="tier-badge light en-text">Business</div>
+          <div class="tier-badge light bn-text">ব্যবসা</div>
+          <h3 class="en-text">WordPress E-commerce</h3><h3 class="bn-text">WordPress ই-কমার্স</h3>
+          <p class="en-text">Professional WooCommerce setup with premium themes, mobile design, SEO optimization.</p>
+          <p class="bn-text">প্রিমিয়াম থিম, মোবাইল ডিজাইন, SEO অপ্টিমাইজেশন সহ পেশাদার WooCommerce সেটআপ।</p>
+          <ul class="feature-list en-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>WooCommerce Setup</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Premium Theme Included</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Mobile-first Design</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SEO Optimization</li>
+          </ul>
+          <ul class="feature-list bn-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>WooCommerce সেটআপ</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>প্রিমিয়াম থিম অন্তর্ভুক্ত</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>মোবাইল-ফার্স্ট ডিজাইন</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SEO অপ্টিমাইজেশন</li>
+          </ul>
+          <div class="price-container">
+            <span class="price light en-text">15,000</span><span class="price light bn-text">১৫,০০০</span>
+            <span class="currency light">BDT</span>
+          </div>
+          <a href="#contact" class="btn btn-white btn-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="en-text">Get Started</span><span class="bn-text">শুরু করুন</span>
+          </a>
+        </div>
+
+        <div class="card service-card essential">
+          <div class="card-glow"></div>
+          <div class="service-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <div class="tier-badge essential en-text">Essential</div>
+          <div class="tier-badge essential bn-text">অত্যাবশ্যক</div>
+          <h3 class="en-text">Portfolio & Landing</h3><h3 class="bn-text">পোর্টফোলিও ও ল্যান্ডিং</h3>
+          <p class="en-text">Lightweight Astro or WordPress for portfolios, landing pages, small business sites.</p>
+          <p class="bn-text">পোর্টফোলিও, ল্যান্ডিং পেজ, ছোট ব্যবসার জন্য হালকা Astro বা WordPress।</p>
+          <ul class="feature-list en-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Astro/WordPress Build</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Modern Minimalist UI</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Contact + WhatsApp</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Fast & SEO Ready</li>
+          </ul>
+          <ul class="feature-list bn-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Astro/WordPress বিল্ড</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>আধুনিক মিনিমালিস্ট UI</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>যোগাযোগ + WhatsApp</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>দ্রুত ও SEO রেডি</li>
+          </ul>
+          <div class="price-container">
+            <span class="price en-text">10,000</span><span class="price bn-text">১০,০০০</span>
+            <span class="currency">BDT</span>
+          </div>
+          <a href="#contact" class="btn btn-outline btn-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="en-text">Get Started</span><span class="bn-text">শুরু করুন</span>
+          </a>
+        </div>
+
+        <div class="card service-card custom-card">
+          <div class="custom-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="card-glow custom-glow"></div>
+          <div class="service-icon custom-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="tier-badge custom-tier en-text">Custom</div>
+          <div class="tier-badge custom-tier bn-text">কাস্টম</div>
+          <h3 class="en-text">Negotiable / Custom</h3><h3 class="bn-text">আলোচনাসাপেক্ষে</h3>
+          <p class="en-text">Have a unique project in mind? Let's discuss your specific requirements and find the perfect solution for your budget.</p>
+          <p class="bn-text">অনন্য প্রজেক্ট আছে? আপনার নির্দিষ্ট প্রয়োজনীয়তা নিয়ে আলোচনা করুন এবং আপনার বাজেটের জন্য সঠিক সমাধান খুঁজুন।</p>
+          <ul class="feature-list en-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Tailored Solution</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Flexible Timeline</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Budget Negotiable</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Direct Communication</li>
+          </ul>
+          <ul class="feature-list bn-text">
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>কাস্টম সমাধান</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>নমনীয় সময়সীমা</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>বাজেট আলোচনাসাপেক্ষে</li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>সরাসরি যোগাযোগ</li>
+          </ul>
+          <div class="price-container">
+            <span class="price custom-price en-text">Let's Talk</span><span class="price custom-price bn-text">আলোচনা করুন</span>
+          </div>
+          <a href="#contact" class="btn btn-primary btn-full custom-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="en-text">Get Quote</span><span class="bn-text">কোটা পান</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expertise Section -->
+  <section id="expertise" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5-2"/><path d="M6.8 9 3.3 7"/><path d="m20.7 7-3.5 2"/><path d="m9 22 3-8 3 8"/><path d="M8 22h8"/><path d="M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.4"/></svg>
+          <span class="en-text">Expertise</span><span class="bn-text">দক্ষতা</span>
+        </span>
+        <h2><span class="en-text">Technical </span><span class="bn-text">কারিগরি </span><span class="gradient-text en-text">Arsenal</span><span class="gradient-text bn-text">অস্ত্রাগার</span></h2>
+      </div>
+      <div class="expertise-grid">
+        <div class="expertise-item">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          </div>
+          <h4><span class="en-text">Backend</span><span class="bn-text">ব্যাকএন্ড</span></h4>
+          <p><span class="en-text">Laravel 13, PHP 8.x, Livewire 4</span><span class="bn-text">Laravel 13, PHP 8.x, Livewire 4</span></p>
+        </div>
+        <div class="expertise-item">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h4><span class="en-text">Frontend</span><span class="bn-text">ফ্রন্টএন্ড</span></h4>
+          <p><span class="en-text">Astro 4, Next.js, Tailwind CSS</span><span class="bn-text">Astro 4, Next.js, Tailwind CSS</span></p>
+        </div>
+        <div class="expertise-item">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h4><span class="en-text">Admin UI</span><span class="bn-text">অ্যাডমিন UI</span></h4>
+          <p><span class="en-text">Filament v3, Livewire</span><span class="bn-text">Filament v3, Livewire</span></p>
+        </div>
+        <div class="expertise-item">
+          <div class="expertise-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5-2"/><path d="M6.8 9 3.3 7"/><path d="m20.7 7-3.5 2"/><path d="m9 22 3-8 3 8"/><path d="M8 22h8"/><path d="M12 2a4 4 0 0 0-4 4c0 1.5.8 2.8 2 3.4"/></svg>
+          </div>
+          <h4><span class="en-text">AI & Automation</span><span class="bn-text">AI ও অটোমেশন</span></h4>
+          <p><span class="en-text">MCP Servers, Claude/Gemini</span><span class="bn-text">MCP সার্ভার, Claude/Gemini</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section bg-light">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span>
+          </span>
+          <h2><span class="en-text">Let's Build </span><span class="bn-text">একসাথে </span><span class="gradient-text en-text">Together</span><span class="gradient-text bn-text">তৈরি করি</span></h2>
+          <p class="en-text">Ready to transform your digital presence? Book a free 15-minute strategy call.</p>
+          <p class="bn-text">আপনার ডিজিটাল উপস্থিতি রূপান্তরিত করতে প্রস্তুত? একটি বিনামূল্যে ১৫ মিনিটের কৌশল কল বুক করুন।</p>
+          <div class="contact-links">
+            <a href="tel:+8801794188835" class="contact-item">
+              <div class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <span class="label en-text">Phone / WhatsApp</span><span class="label bn-text">ফোন / WhatsApp</span>
+                <span class="value en-text">+880 1794 188 835</span><span class="value bn-text">+৮৮০ ১৭৯৪ ১৮৮ ৮৩৫</span>
+              </div>
+              <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <a href="https://linkedin.com/in/pranthodas/" target="_blank" class="contact-item">
+              <div class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+              </div>
+              <div>
+                <span class="label en-text">LinkedIn</span><span class="label bn-text">LinkedIn</span>
+                <span class="value en-text">linkedin.com/in/pranthodas</span><span class="value bn-text">linkedin.com/in/pranthodas</span>
+              </div>
+              <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <a href="https://github.com/Prantho-das" target="_blank" class="contact-item">
+              <div class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+              </div>
+              <div>
+                <span class="label en-text">GitHub</span><span class="label bn-text">GitHub</span>
+                <span class="value en-text">github.com/Prantho-das</span><span class="value bn-text">github.com/Prantho-das</span>
+              </div>
+              <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="card-header">
+            <img src="/DSCF7857.JPG" alt="Prantho" />
+            <div>
+              <h4><span class="en-text">Prantho Das</span><span class="bn-text">প্রন্থ দাস</span></h4>
+              <p><span class="en-text">Full Stack Developer</span><span class="bn-text">ফুল স্ট্যাক ডেভেলপার</span></p>
+            </div>
+          </div>
+          <a href="https://wa.me/8801794188835" target="_blank" class="btn btn-whatsapp btn-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            <span class="en-text">Chat on WhatsApp</span><span class="bn-text">WhatsApp এ চ্যাট করুন</span>
+          </a>
+          <p class="free-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="en-text">15 minutes free consultation</span><span class="bn-text">১৫ মিনিট বিনামূল্যে পরামর্শ</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="/DSCF7857.JPG" alt="Prantho" />
+          <div>
+            <h4><span class="en-text">Prantho Das</span><span class="bn-text">প্রন্থ দাস</span></h4>
+            <p><span class="en-text">Crafting digital experiences with passion and precision.</span><span class="bn-text">আবেগ ও দক্ষতার সাথে ডিজিটাল অভিজ্ঞতা তৈরি করা।</span></p>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="en-text">Navigation</span><span class="bn-text">নেভিগেশন</span>
+          </h4>
+          <a href="#about"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a>
+          <a href="#services"><span class="en-text">Services</span><span class="bn-text">সেবাসমূহ</span></a>
+          <a href="#expertise"><span class="en-text">Expertise</span><span class="bn-text">দক্ষতা</span></a>
+          <a href="#contact"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a>
+        </div>
+        <div class="footer-links">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span class="en-text">Services</span><span class="bn-text">সেবাসমূহ</span>
+          </h4>
+          <a href="#services"><span class="en-text">Laravel E-commerce</span><span class="bn-text">Laravel ই-কমার্স</span></a>
+          <a href="#services"><span class="en-text">WordPress Setup</span><span class="bn-text">WordPress সেটআপ</span></a>
+          <a href="#services"><span class="en-text">Portfolio Sites</span><span class="bn-text">পোর্টফোলিও সাইট</span></a>
+        </div>
+        <div class="footer-social">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            <span class="en-text">Connect</span><span class="bn-text">সংযুক্ত হন</span>
+          </h4>
+          <div class="social">
+            <a href="https://linkedin.com/in/pranthodas/" target="_blank" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://github.com/Prantho-das" target="_blank" aria-label="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+            </a>
+            <a href="https://wa.me/8801794188835" target="_blank" aria-label="WhatsApp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>2025 <span class="en-text">Prantho Das</span><span class="bn-text">প্রন্থ দাস</span>. <span class="en-text">All rights reserved.</span><span class="bn-text">সর্বস্বত্ব সংরক্ষিত।</span></p>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #8b5cf6;
+    --success: #22c55e;
+    --dark: #0f172a;
+    --gray-600: #64748b;
+    --gray-400: #94a3b8;
+    --gray-200: #e2e8f0;
+    --gray-100: #f8fafc;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --shadow-xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--dark);
+    line-height: 1.6;
+    background: var(--white);
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .section { padding: 6rem 0; }
+  .bg-light { background: var(--gray-100); }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray-200);
+    z-index: 1000;
+  }
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--dark);
+  }
+  .logo-img {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+  }
+  .logo-text { font-weight: 700; font-size: 1.125rem; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .nav-links a {
+    color: var(--gray-600);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--dark); }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .nav-lang {
+    display: flex;
+    gap: 0.25rem;
+    background: var(--gray-100);
+    padding: 0.25rem;
+    border-radius: 50px;
+  }
+  .nav-lang .lang-btn {
+    padding: 0.375rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--gray-600);
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  .nav-lang .lang-btn.active {
+    background: var(--white);
+    color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .btn-nav {
+    background: var(--dark);
+    color: var(--white);
+  }
+
+  /* Language Toggle Styles */
+  .bn-text { display: none; }
+  [data-lang="bn"] .en-text { display: none; }
+  [data-lang="bn"] .bn-text { display: inline; }
+  html[data-lang="bn"] .en-text { display: none; }
+  html[data-lang="bn"] .bn-text { display: inline; }
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+  }
+  .btn-nav:hover {
+    background: var(--primary);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    transform: translateY(-2px);
+  }
+  .mobile-menu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--dark);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn:hover::before { opacity: 1; }
+  .btn:hover { transform: translateY(-3px); }
+  .btn:active { transform: translateY(-1px); }
+  .btn-sm { padding: 0.5rem 1.25rem; font-size: 0.875rem; }
+  .btn-lg { padding: 1rem 2rem; font-size: 1.0625rem; }
+  .btn-full { width: 100%; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.45);
+  }
+
+  .btn-outline {
+    background: var(--white);
+    color: var(--dark);
+    border: 2px solid var(--gray-200);
+  }
+  .btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-gradient {
+    background: linear-gradient(var(--white), var(--white)) padding-box,
+                linear-gradient(135deg, var(--primary), var(--secondary)) border-box;
+    color: var(--primary);
+    border: 2px solid transparent;
+  }
+
+  .btn-whatsapp {
+    background: var(--success);
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+  }
+  .btn-whatsapp:hover {
+    background: #16a34a;
+    box-shadow: 0 12px 30px rgba(34, 197, 94, 0.45);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 10rem 0 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+  .blob-1 {
+    width: 600px; height: 600px;
+    background: rgba(99, 102, 241, 0.2);
+    top: -200px; right: -150px;
+  }
+  .blob-2 {
+    width: 400px; height: 400px;
+    background: rgba(139, 92, 246, 0.15);
+    bottom: -100px; left: -100px;
+  }
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title .line { display: block; }
+  .hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-icon {
+    width: 48px; height: 48px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.5rem;
+    color: var(--primary);
+  }
+  .stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label {
+    font-size: 0.8125rem;
+    color: var(--gray-600);
+  }
+  .hero-image { display: flex; justify-content: center; }
+  .image-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+  }
+  .image-container img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid var(--white);
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    z-index: 1;
+  }
+  .image-ring {
+    position: absolute;
+    inset: -20px;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: spin 25s linear infinite;
+  }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .floating-badge {
+    position: absolute;
+    background: var(--white);
+    padding: 0.875rem 1.25rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-lg);
+    animation: float 6s ease-in-out infinite;
+    z-index: 2;
+  }
+  .badge-1 {
+    top: 15%;
+    left: -25%;
+    animation-delay: 0s;
+  }
+  .badge-2 {
+    bottom: 20%;
+    right: -20%;
+    animation-delay: -3s;
+  }
+  .floating-badge svg { color: var(--primary); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .mouse {
+    width: 26px; height: 42px;
+    border: 2px solid var(--gray-400);
+    border-radius: 13px;
+    position: relative;
+  }
+  .wheel {
+    width: 4px; height: 8px;
+    background: var(--primary);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    animation: scroll 2s ease-in-out infinite;
+  }
+  @keyframes scroll {
+    0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-image {
+    position: relative;
+  }
+  .about-image img {
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-lg);
+  }
+  .about-content h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .about-content p {
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+  .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .skill {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+  }
+  .skill:hover {
+    transform: translateX(8px);
+    box-shadow: var(--shadow-md);
+  }
+  .skill-icon {
+    width: 52px; height: 52px;
+    min-width: 52px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+  }
+  .skill h4 { font-weight: 700; margin-bottom: 0.25rem; }
+  .skill p { font-size: 0.875rem; color: var(--gray-600); margin: 0; }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+  .section-header h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .section-header p { color: var(--gray-600); }
+
+  /* Services */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    perspective: 1000px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+  }
+  .card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .card:hover .card-glow {
+    opacity: 1;
+  }
+  .service-card.popular {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    transform: translateY(0);
+  }
+  .service-card.popular:hover {
+    transform: translateY(-12px) scale(1.02);
+  }
+  .enterprise {
+    border: 1px solid rgba(99, 102, 241, 0.1);
+  }
+  .essential {
+    border: 1px solid rgba(139, 92, 246, 0.1);
+  }
+  .custom-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px dashed var(--primary);
+  }
+  .custom-glow {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+  }
+  .custom-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+  @keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  .custom-price {
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .popular-tag {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #1e1b4b;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+    animation: float-tag 3s ease-in-out infinite;
+    z-index: 10;
+  }
+  @keyframes float-tag {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-5px); }
+  }
+  .service-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s;
+  }
+  .card:hover .service-icon {
+    transform: rotate(5deg) scale(1.1);
+  }
+  .service-icon.light {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+  }
+  .service-icon.custom-icon {
+    background: linear-gradient(135deg, var(--dark), #1e293b);
+  }
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--gray-100);
+    color: var(--gray-600);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tier-badge.enterprise {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    color: var(--primary);
+  }
+  .tier-badge.essential {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.1));
+    color: #7c3aed;
+  }
+  .tier-badge.light {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+  }
+  .tier-badge.custom-tier {
+    background: var(--gray-200);
+    color: var(--dark);
+  }
+  .service-card h3 {
+    font-size: 1.375rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .service-card p {
+    font-size: 0.9375rem;
+    color: var(--gray-600);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .service-card.popular p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--gray-100);
+    border-radius: 16px;
+  }
+  .service-card.popular .price-container {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .price {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .price.light { 
+    color: var(--white);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .currency { 
+    color: var(--gray-600); 
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .currency.light { 
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .btn-white {
+    background: var(--white);
+    color: var(--primary);
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  .btn-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  }
+  .btn-white::before {
+    display: none;
+  }
+  .custom-btn {
+    background: linear-gradient(135deg, var(--dark), #1e293b);
+    color: var(--white);
+  }
+  .custom-btn:hover {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+  }
+  .feature-list {
+    list-style: none;
+    margin-bottom: 1.5rem;
+  }
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+  .feature-list svg { color: #22c55e; flex-shrink: 0; }
+  .service-card.popular .feature-list svg { color: rgba(255,255,255,0.8); }
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    margin-bottom: 1.5rem;
+  }
+  .price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  .price.light { color: var(--white); }
+  .currency { color: var(--gray-600); font-size: 0.875rem; }
+  .currency.light { color: rgba(255,255,255,0.7); }
+
+  /* Expertise */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .expertise-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+    border: 1px solid transparent;
+  }
+  .expertise-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+  }
+  .expertise-icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 1.25rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+  }
+  .expertise-item h4 { font-weight: 700; margin-bottom: 0.5rem; }
+  .expertise-item p { font-size: 0.875rem; color: var(--gray-600); }
+
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-info h2 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .contact-info > p {
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--white);
+    border-radius: 18px;
+    text-decoration: none;
+    color: var(--dark);
+    transition: all 0.3s;
+    box-shadow: var(--shadow-sm);
+  }
+  .contact-item:hover {
+    transform: translateX(10px);
+    box-shadow: var(--shadow-md);
+  }
+  .contact-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+  }
+  .contact-item .label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .contact-item .value { font-weight: 600; }
+  .arrow { margin-left: auto; color: var(--gray-400); }
+  .contact-card {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 28px;
+    padding: 2.5rem;
+    color: var(--white);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .card-header img {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.3);
+  }
+  .card-header h4 { font-weight: 700; font-size: 1.25rem; }
+  .card-header p { opacity: 0.85; }
+  .free-tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    opacity: 0.85;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--dark);
+    color: var(--white);
+    padding: 5rem 0 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand {
+    display: flex;
+    gap: 1rem;
+  }
+  .footer-brand img {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    object-fit: cover;
+  }
+  .footer-brand h4 { font-weight: 700; margin-bottom: 0.5rem; }
+  .footer-brand p { opacity: 0.7; font-size: 0.9375rem; }
+  .footer-links h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+  }
+  .footer-links a {
+    display: block;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    margin-bottom: 0.875rem;
+    font-size: 0.9375rem;
+    transition: all 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); transform: translateX(4px); }
+  .footer-social h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+  }
+  .social { display: flex; gap: 0.75rem; }
+  .social a {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    transition: all 0.3s;
+  }
+  .social a:hover {
+    background: var(--primary);
+    transform: translateY(-4px);
+  }
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+  }
+  .footer-bottom p { opacity: 0.5; font-size: 0.875rem; }
+
+  /* Responsive */
+  @media (max-width: 1280px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-image { display: none; }
+    .hero-badge, .hero-buttons { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-image { order: -1; }
+    .services-grid { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+    .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .nav-links { 
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1rem;
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-lg);
+    }
+    .nav-links.active { display: flex; }
+    .nav-actions { flex-direction: column; width: 100%; }
+    .nav-lang { width: 100%; justify-content: center; }
+    .btn-nav { width: 100%; justify-content: center; }
+    .mobile-menu { display: block; }
+    .hero { padding: 7rem 0 4rem; }
+    .hero-title { font-size: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .stat-number { font-size: 1.75rem; }
+    .section { padding: 4rem 0; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-brand { flex-direction: column; align-items: center; }
+    .social { justify-content: center; }
+  }
+</style>
